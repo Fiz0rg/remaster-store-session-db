@@ -21,7 +21,7 @@ async def get_all_categories(offset: int = 0,
 
 
 @router.post('/create_category', response_model=CategoryCreate)
-async def create_category(cat: CategoryCreate, session: Session = Depends(depends.get_session)):
+async def create_category(cat: str, session: Session = Depends(depends.get_session)):
     model_name = "Category"
     crud_class = depends.BasicCRUD(session, model_name)
     return await crud_class.create(cat)
