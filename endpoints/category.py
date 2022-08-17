@@ -23,13 +23,14 @@ async def get_all_categories(offset: int = 0,
 @router.post('/create_category', response_model=CategoryCreate)
 async def create_category(cat: CategoryCreate, session: Session = Depends(depends.get_session)):
     model_name = "Category"
-    crud_class = depends.BasicCRUD(session, model_name, cat)
-    return await crud_class.create()
+    crud_class = depends.BasicCRUD(session, model_name)
+    return await crud_class.create(cat)
 
 
-@router.delete('/delete', response_model=CategoryCreate)
+@router.delete('/delete')
 async def delete_category(category_name: str,
                           session: Session = Depends(depends.get_session)):
+    print('123')
     model_name = "Category"
-    crud_class = depends.BasicCRUD(session, model_name, category_name)
+    crud_class = depends.BasicCRUD(session, model_name)
     return await crud_class.delete(category_name)
