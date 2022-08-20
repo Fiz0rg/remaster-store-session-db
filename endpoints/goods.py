@@ -15,10 +15,9 @@ model_name = 'GoodsDb'
 
 
 @router.post('/create', response_model=goods.FullGoodsResponse)
-async def create_category(item: goods.GoodsCreate,
-                          session: Session = Depends(get_session)):
+async def create_goods(item: goods.GoodsCreate,
+                       session: Session = Depends(get_session)):
     base_class = BasicCRUD(db=session, model_name=model_name)
-    print(item)
     return await base_class.create(item)
 
 

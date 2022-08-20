@@ -6,6 +6,7 @@ from fastapi import Query
 
 from db.database import engine
 from db.goods import GoodsDb
+from db.user import UserDb
 
 
 def get_session():
@@ -14,7 +15,8 @@ def get_session():
 
 
 models_db = {'Category': Category,
-             'GoodsDb': GoodsDb}
+             'GoodsDb': GoodsDb,
+             'UserDb': UserDb}
 
 
 class BasicCRUD:
@@ -24,12 +26,11 @@ class BasicCRUD:
         
 
     async def create(self, item_name):
-        print(item_name)     #ДОДЕЛАТЬ!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        find_in_db = self.db_session.query(self.models_db).filter(self.models_db.name == item_name)
-        item_add = self.models_db.from_orm(find_in_db)
+        item_add = self.models_db.from_orm(item_name)
         self.db_session.add(item_add)
         self.db_session.commit()
         self.db_session.refresh(item_add)
+        print(item_add)
         return item_add
 
     async def delete(self, category_name: str):

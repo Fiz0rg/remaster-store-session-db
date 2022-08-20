@@ -5,6 +5,9 @@ from pydantic import BaseModel
 from .base import OurBaseModel
 
 
-class CategoryCreate(BaseModel):
-    id: int
+class CategoryName(BaseModel):
     name: str
+
+
+class CategoryCreate(CategoryName):
+    id: int

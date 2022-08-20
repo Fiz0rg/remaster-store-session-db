@@ -9,7 +9,7 @@ SECRET_KEY = '4b85007d663af5a8e97d2bd65afa8befa815df1c0a5acf44625f7f136d5a8d9c'
 ALGORITHM = 'HS256'
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl='token')
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl='users/token')
 
 pwd_context = CryptContext(schemes=['bcrypt'], deprecated='auto')
 
