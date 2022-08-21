@@ -1,10 +1,12 @@
 import imp
 
 from typing import List
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Security
 from sqlmodel import Session
 
 from db.goods import GoodsDb
+from schemas.user import NameUser
+from security.user import get_current_user
 
 from .depends import get_session, BasicCRUD
 from schemas import goods
@@ -16,7 +18,8 @@ model_name = 'GoodsDb'
 
 @router.post('/create', response_model=goods.FullGoodsResponse)
 async def create_goods(item: goods.GoodsCreate,
-                       session: Session = Depends(get_session)):
+                       session: Session = Depends(get_session),
+                       permissions: NameUser = Security(get_current_user, scopes=["admin"])):
     base_class = BasicCRUD(db=session, model_name=model_name)
     return await base_class.create(item)
 
