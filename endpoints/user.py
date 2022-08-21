@@ -2,7 +2,7 @@ from datetime import timedelta
 import imp
 from typing import List
 
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Security
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlmodel import Session
 
@@ -25,7 +25,8 @@ async def access_token(user_form: OAuth2PasswordRequestForm = Depends(),
     user = auth_user(user_form.username, user_form.password, session)
     access_expire_token = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
     access_token = create_access_token(
-        data={"sub": user.name}, expires_delta=access_expire_token
+        data={"sub": user.name, "scopes": user_form.scopes}, 
+        expires_delta=access_expire_token
     )
     return {"access_token": access_token, "type_token": "bearer"} 
 
@@ -43,5 +44,5 @@ async def get_all_users(session: Session = Depends(get_session)):
 
 
 @router.get('/current_user', response_model=NameUser)
-async def user(current_user: NameUser = Depends(get_current_user)):
+async def user(current_user: NameUser = Security(get_current_user, scopes=["current"])):
     return current_user
