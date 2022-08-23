@@ -1,10 +1,10 @@
 # import imp
 from select import select
 from sqlmodel import Session
-from db.category import Category
 from fastapi import Query
 
 from db.database import engine
+from db.category import Category
 from db.goods import GoodsDb
 from db.user import UserDb
 
@@ -16,7 +16,8 @@ def get_session():
 
 models_db = {'Category': Category,
              'GoodsDb': GoodsDb,
-             'UserDb': UserDb}
+             'UserDb': UserDb,
+             }
 
 
 class BasicCRUD:
@@ -30,7 +31,6 @@ class BasicCRUD:
         self.db_session.add(item_add)
         self.db_session.commit()
         self.db_session.refresh(item_add)
-        print(item_add)
         return item_add
 
     async def delete(self, category_name: str):

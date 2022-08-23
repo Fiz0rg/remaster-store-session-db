@@ -86,11 +86,7 @@ def get_current_user(security_scopes: SecurityScopes,
     user = get_user(token_data.username, session)
     if user is None:
         return credentials_exeption
-    print(security_scopes.scopes)
     for scope in security_scopes.scopes:
-        print(f'scope {scope}')
-        print(f'security_scope {security_scopes.scopes}')
-        print(f'token_data {token_data.scopes}')
         if scope not in token_data.scopes:
             raise incorrect_auth("Not enought permissions")
     return user

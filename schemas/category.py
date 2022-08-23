@@ -5,7 +5,7 @@ from pydantic import BaseModel
 from .base import OurBaseModel
 
 
-class CategoryName(BaseModel):
+class CategoryName(OurBaseModel):
     name: str
 
 
