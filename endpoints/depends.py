@@ -5,8 +5,7 @@ from fastapi import Query
 
 from db.database import engine
 from db.category import Category
-from db.goods import GoodsDb
-from db.user import UserDb
+from db.user import UserDb, GoodsDb
 
 
 def get_session():

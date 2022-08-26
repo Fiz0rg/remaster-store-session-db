@@ -1,4 +1,5 @@
 from datetime import datetime, timedelta
+from turtle import pen
 
 from fastapi.security import OAuth2PasswordBearer, SecurityScopes
 from fastapi import Depends
@@ -77,6 +78,7 @@ def get_current_user(security_scopes: SecurityScopes,
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         username: str = payload.get("sub")
+        print(username)
         if username is None:
             raise credentials_exeption
         token_scopes = payload.get("scopes", [])

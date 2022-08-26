@@ -7,7 +7,7 @@ from sqlmodel import Session, select
 from security.user import get_current_user
 from .depends import BasicCRUD, get_session
 
-from schemas.user import NameUser
+from schemas.user import UserName
 from schemas.category import CategoryCreate, CategoryName
 from db.category import Category
 
@@ -27,14 +27,16 @@ async def get_all_categories(offset: int = 0,
 @router.post('/create_category', response_model=CategoryCreate)
 async def create_category(name: CategoryName, 
                           session: Session = Depends(get_session),
-                          permissions: NameUser = Security(get_current_user, scopes=["admin"])):
+                        #   permissions: UserName = Security(get_current_user, scopes=["admin"])
+                        ):
     base_class = BasicCRUD(db=session, model_name=model_name)
     return await base_class.create(item_name=name)
 
 @router.delete('/delete')
 async def delete_category(category_name: str,
                           session: Session = Depends(get_session),
-                          permissions: NameUser = Security(get_current_user, scopes=["admin"])):
+                        #   permissions: UserName = Security(get_current_user, scopes=["admin"])
+                        ):
     model_name = "Category"
     crud_class = BasicCRUD(session, model_name)
     return await crud_class.delete(category_name)

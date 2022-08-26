@@ -1,30 +1,29 @@
-from typing import Optional
-from .base import OurBaseModel
+from typing import List
+
+from sqlmodel import SQLModel
+
+from db.user import Goods
 
 
-class IdUser(OurBaseModel):
-    id: Optional[int]
+class IdClass(SQLModel):
+    id: int
 
 
-class PasswordUser(OurBaseModel):
-    password: str
-
-
-class NameUser(OurBaseModel):
+class UserName(SQLModel):
     name: str
 
 
-class NewUser(NameUser, PasswordUser):
+class PasswordUser(SQLModel):
+    password: str
+
+
+class NewUser(UserName, PasswordUser):
     pass
 
 
-class FullUser(NewUser, IdUser):
-    pass 
+class UserBasket(IdClass, UserName, PasswordUser):
+    basket: List[Goods] = []
 
 
-class UserNameId(NameUser, IdUser):
-    pass
 
 
-class FullUser(IdUser, NameUser, PasswordUser):
-    pass

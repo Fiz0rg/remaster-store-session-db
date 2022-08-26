@@ -1,11 +1,9 @@
-import imp
-from pydoc import describe
 from typing import Optional
 
-from .base import OurBaseModel
+from sqlmodel import SQLModel
 
 
-class GoodsCreate(OurBaseModel):
+class GoodsCreate(SQLModel):
     name: str
     describtion: str = ''
     category_id: int
@@ -13,3 +11,7 @@ class GoodsCreate(OurBaseModel):
 
 class FullGoodsResponse(GoodsCreate):
     id: Optional[int]
+
+
+
+
