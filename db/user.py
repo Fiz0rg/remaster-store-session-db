@@ -16,6 +16,7 @@ class TestUser(User):
     pass
 
 
+class UserDb(TestUser, table=True):
     goods: List["GoodsDb"] = Relationship(back_populates="users")
 
 
