@@ -25,5 +25,3 @@ class UserBasket(IdClass, UserName, PasswordUser):
     basket: List[Goods] = []
 
 
-
-

@@ -48,11 +48,12 @@ def user(current_user: UserBasket = Security(get_current_user, scopes=["current"
     return current_user
 
 
-# @router.get('/test', response_model=UserBasket)
-# def test(user_id: int,
-#          session: Session = Depends(get_session)):
-#     get_user = session.get(UserDb, user_id)
-#     return get_user
+@router.get('/test', response_model=UserBasket)
+def test(user_id: int,
+         session: Session = Depends(get_session)):
+    get_user = session.get(UserDb, user_id)
+    print(get_user.goods)
+    return get_user
 
 
 """

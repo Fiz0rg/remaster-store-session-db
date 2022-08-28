@@ -4,7 +4,7 @@ from sqlmodel import Field, SQLModel, Relationship
 
 
 class UnionAttributes(SQLModel):
-    id: Optional[int] = Field(primary_key=True, default=None)
+    id: Optional[int] = Field(primary_key=True, default=None, index=True, sa_column_kwargs={"unique": True})
     name: str
 
 
@@ -16,8 +16,7 @@ class TestUser(User):
     pass
 
 
-class UserDb(TestUser, table=True):
-    goods: List["GoodsDb"] = Relationship(back_populates='users')
+    goods: List["GoodsDb"] = Relationship(back_populates="users")
 
 
 
@@ -31,7 +30,7 @@ class TestGoods(Goods):
 
 
 class GoodsDb(TestGoods, table=True):
-    users: Optional[UserDb] = Relationship(back_populates="goods")
+    users: Optional["UserDb"] = Relationship(back_populates="goods")
 
 
 class FuckIt(SQLModel):
