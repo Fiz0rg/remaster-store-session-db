@@ -41,4 +41,4 @@ class GoodsDb(Goods, table=True):
     Модель товаров.
     """
 
-    users: Optional[UserDb] = Relationship(back_populates="goods")
+    users: Optional["UserDb"] = Relationship(back_populates="goods")
