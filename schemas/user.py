@@ -2,7 +2,7 @@ from typing import List
 
 from sqlmodel import SQLModel
 
-from db.user import Goods
+from db.user import Goods, User
 
 
 class IdClass(SQLModel):
@@ -21,7 +21,10 @@ class NewUser(UserName, PasswordUser):
     pass
 
 
-class UserBasket(IdClass, UserName, PasswordUser):
-    basket: List[Goods] = []
+class IdUser(IdClass, UserName):
+    pass 
 
+
+class UserBasket(User):
+    goods: List["Goods"] = []
 

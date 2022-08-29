@@ -4,7 +4,14 @@ from sqlmodel import Field, SQLModel, Relationship
 
 
 class UnionAttributes(SQLModel):
-    id: Optional[int] = Field(primary_key=True, default=None, index=True, sa_column_kwargs={"unique": True})
+    """
+    Базовая общая модель с id и name, которая есть в двух моделях.
+    Так как там есть друг на друга ссылки, то расположение моделей в отдельных директориях вызовет циркулярный импорт.
+    Пока оставил так
+    """
+
+
+    id: Optional[int] = Field(primary_key=True, default=None, index=True)
     name: str
 
 
@@ -12,11 +19,13 @@ class User(UnionAttributes):
     password: str
 
 
-class TestUser(User):
-    pass
+class UserDb(User, table=True):
+    """
+    Модель для пользователей, которая ссылается на модель товаров и выдаёт их список.
+    Именно эта модель выдаёт ошибку, что такой атрибут, как "goods" в этой модели не найдет.
+    """
 
 
-class UserDb(TestUser, table=True):
     goods: List["GoodsDb"] = Relationship(back_populates="users")
 
 
@@ -24,22 +33,12 @@ class UserDb(TestUser, table=True):
 class Goods(UnionAttributes):
     description: str = Field(default='')
     category_id: int = Field(foreign_key='category.id', default=None)
-
-
-class TestGoods(Goods):
     user_id: Optional[int] = Field(default=None, foreign_key="userdb.id")
 
 
-class GoodsDb(TestGoods, table=True):
-    users: Optional["UserDb"] = Relationship(back_populates="goods")
+class GoodsDb(Goods, table=True):
+    """
+    Модель товаров.
+    """
 
-
-class FuckIt(SQLModel):
-    name: str
-    description: str = Field(default='')
-    category_id: int = Field(foreign_key='category.id')
-    user_id: Optional[int] = Field(default=None, foreign_key="userdb.id")
-
-
-class FuckId(FuckIt):
-    id: int
+    users: Optional[UserDb] = Relationship(back_populates="goods")

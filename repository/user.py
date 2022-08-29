@@ -18,14 +18,12 @@ class UserRepository:
             password=hash_password(new_user.password))
 
         result = BasicCRUD(db=self.session, model_name="UserDb")
-        print(type(new))
         return await result.create(new)
 
     async def patch(self, current_user, goods_id):
         statement = select(UserDb).where(UserDb.id == current_user)
         result = self.session.exec(statement)
         user = result.one()
-        print(f'ffffffffff {type(user.goods_id)}')
 
         user.goods_id = goods_id
         self.session.add(user)
