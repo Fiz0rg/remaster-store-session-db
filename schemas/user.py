@@ -26,5 +26,5 @@ class IdUser(IdClass, UserName):
 
 
 class UserBasket(User):
-    goods: List["Goods"] = []
+    goods: List[Goods] = []
 
